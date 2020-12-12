@@ -8,6 +8,11 @@ const memory = new WebAssembly.Memory({
 WebAssembly.instantiateStreaming(fetch('prog.wasm'), {
     js: {
         mem: memory
+    },
+    env: {
+        callbackFunc: function (i) {
+            console.log(`Callback called with ${i}`);
+        }
     }
 }).then((response) => {
     console.log(response);
@@ -57,4 +62,6 @@ WebAssembly.instantiateStreaming(fetch('prog.wasm'), {
     response.instance.exports.float_arrayAddition(arr2.byteOffset, arr3.byteOffset, arr4.byteOffset, l);
     console.log(`addition of ${arr2} and ${arr3} = `, arr4)
     
+
+    response.instance.exports.execCallback(5);
 });

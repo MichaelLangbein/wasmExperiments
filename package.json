@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "buildWasm": "clang --target=wasm32 -nostdlib -Wl,--no-entry -Wl,--export-all -o prog.wasm prog.c",
-    "buildOptimizedWasm": "clang --target=wasm32 -O3 -flto -nostdlib -Wl,--no-entry -Wl,--export-all -Wl,--lto-O3 -o prog.wasm prog.c"
+    "buildOptimizedWasm": "clang --target=wasm32 -O3 -flto -nostdlib -Wl,--no-entry -Wl,--export-all -Wl,--allow-undefined -Wl,--lto-O3 -o prog.wasm prog.c"
   },
   "author": "",
   "license": "ISC"

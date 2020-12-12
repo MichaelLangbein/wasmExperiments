@@ -31,3 +31,11 @@ void float_arrayAddition (float* arr1, float* arr2, float* arrSum, int arrLength
         arrSum[i] = arr1[i] + arr2[i];
     }
 }
+
+
+extern void callbackFunc(int i);
+
+
+void execCallback (int i) {
+    callbackFunc(i + 1);
+}
