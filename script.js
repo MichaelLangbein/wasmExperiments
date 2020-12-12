@@ -1,12 +1,9 @@
-console.log("Hi!");
 
-const importObject = {};
 
-fetch('prog.wasm').then((response) => {
-    return response.arrayBuffer();
-}).then((bytes) => {
-    return WebAssembly.instantiate(bytes, importObject);
-}).then((wasm) => {
-    console.log(wasm);
-    console.log(importObject)
+WebAssembly.instantiateStreaming(fetch('prog.wasm')).then((response) => {
+    console.log(response);
+
+    const result = response.instance.exports.add(4, 1);
+
+    console.log(result);
 });

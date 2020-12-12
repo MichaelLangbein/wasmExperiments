@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setupEmsdk": "source C:/Users/lang_m13/Desktop/c/emsdk/emsdk_env.sh",
-    "buildWasm": " emcc prog.c -s WASM=1 -o prog.wasm"
+    "buildWasm": "clang --target=wasm32 -nostdlib -Wl,--no-entry -Wl,--export-all -o prog.wasm prog.c",
+    "buildOptimizedWasm": "clang --target=wasm32 -O3 -flto -nostdlib -Wl,--no-entry -Wl,--export-all -Wl,--lto-O3 -o prog.wasm prog.c"
   },
   "author": "",
   "license": "ISC"
