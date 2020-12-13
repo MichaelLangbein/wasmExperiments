@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "buildWasm": "clang --target=wasm32 -nostdlib -Wl,--no-entry -Wl,--export-all -o prog.wasm prog.c",
-    "buildOptimizedWasm": "clang --target=wasm32 -O3 -flto -nostdlib -Wl,--no-entry -Wl,--export-all -Wl,--allow-undefined -Wl,--lto-O3 -o prog.wasm prog.c"
+    "serve": "npx webpack serve --config webpack.config.js --port 9000 --inline --progress --profile --watch --content-base src/",
+    "buildWasm": "clang --target=wasm32 -O3 -flto -nostdlib -Wl,--no-entry -Wl,--export-all -Wl,--allow-undefined -Wl,--lto-O3 -o src/wasm/prog.wasm src/prog.c"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Michael Langbein",
+  "license": "MIT",
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "ts-loader": "^8.0.12",
+    "typescript": "^4.1.3",
+    "webpack": "^5.10.1",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  }
 }
