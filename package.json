@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "npx webpack serve --config webpack.config.js --port 9000 --inline --progress --profile --watch --content-base src/",
-    "buildWasm": "clang --target=wasm32 -O3 -flto -nostdlib -Wl,--no-entry -Wl,--export-all -Wl,--allow-undefined -Wl,--lto-O3 -o src/wasm/prog.wasm src/prog.c"
+    "buildWasm": "make all -C src/wasm"
   },
   "author": "Michael Langbein",
   "license": "MIT",

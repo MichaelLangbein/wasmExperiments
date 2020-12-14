@@ -5,16 +5,16 @@ const memory = new WebAssembly.Memory({
     maximum: 1000
 });
 
-WebAssembly.instantiateStreaming(fetch('./wasm/prog.wasm'), {
-    js: {
-        mem: memory
-    },
-    env: {
-        callbackFunc: function (i: number) {
-            console.log(`Callback called with ${i}`);
-        }
-    }
-}).then((response) => {
+
+WebAssembly.instantiateStreaming(fetch('./bundle.wasm'), {
+            env: {
+                memory: memory,
+                callbackFunc: function (i: number) {
+                    console.log(`Callback called with ${i}`);
+                }
+            }
+        })
+    .then((response) => {
     console.log(response);
 
     const exports = response.instance.exports as any;
@@ -25,10 +25,9 @@ WebAssembly.instantiateStreaming(fetch('./wasm/prog.wasm'), {
 
 
 
-
     // pointer to top of memory array
     let offsetBytes = 0;
-    const memBuf = exports.memory.buffer;
+    const memBuf = memory.buffer;
 
 
 
@@ -38,7 +37,7 @@ WebAssembly.instantiateStreaming(fetch('./wasm/prog.wasm'), {
     arr1.set(data1);
     offsetBytes += arr1.length * arr1.BYTES_PER_ELEMENT;
     
-    const result2 = exports.float_arraySum(arr1.byteOffset, arr1.length);
+    const result2 = exports.arraySum(arr1.byteOffset, arr1.length);
     console.log(`sum of (${arr1})`, result2);
 
 
@@ -60,9 +59,13 @@ WebAssembly.instantiateStreaming(fetch('./wasm/prog.wasm'), {
     const arr4 = new Float32Array(memBuf, offsetBytes, l);
     offsetBytes += arr4.length * arr4.BYTES_PER_ELEMENT;
 
-    exports.float_arrayAddition(arr2.byteOffset, arr3.byteOffset, arr4.byteOffset, l);
+    exports.arrayAddition(arr2.byteOffset, arr3.byteOffset, arr4.byteOffset, l);
     console.log(`addition of ${arr2} and ${arr3} = `, arr4)
     
 
     exports.execCallback(5);
+
+
+    const strength = exports.calculateBarcelonaStrength();
+    console.log('Barcelona: ', strength);
 });

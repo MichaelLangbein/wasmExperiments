@@ -29,7 +29,7 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
-    devtool: 'cheap-module-source-map',
+    devtool: 'inline-source-map',
     devServer: {
         disableHostCheck: true, 
         // public: 'localhost:9000'
